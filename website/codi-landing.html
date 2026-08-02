@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>코디(Codi) — 대화하며 성장하는 AI 코딩 동반자</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0f;--card:#13131f;--accent:#7c3aed;--accent2:#3b82f6;--text:#e2e8f0;--muted:#64748b;--grad:linear-gradient(135deg,#7c3aed,#3b82f6)}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+canvas#stars{position:fixed;top:0;left:0;z-index:0;pointer-events:none}
+section{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:4rem 2rem;transition:opacity .8s ease}
+section.fade-in{opacity:0;transform:translateY(40px)}
+section.fade-in.visible{opacity:1;transform:translateY(0)}
+.container{max-width:1100px;width:100%;margin:0 auto}
+h1{font-size:clamp(2.5rem,6vw,5rem);font-weight:900;line-height:1.15;letter-spacing:-.02em}
+h2{font-size:clamp(1.8rem,4vw,3rem);font-weight:700;margin-bottom:1.5rem;text-align:center}
+h3{font-size:1.25rem;font-weight:600;margin-bottom:.5rem}
+p{line-height:1.7;color:var(--muted)}
+.gradient-text{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.badge{display:inline-block;padding:.4rem 1rem;background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.3);border-radius:999px;font-size:.85rem;font-weight:500;color:#a78bfa;margin-bottom:1.5rem}
+.btn{display:inline-block;padding:1rem 2.5rem;border-radius:12px;font-weight:700;font-size:1.1rem;text-decoration:none;cursor:pointer;border:none;transition:all .3s}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 4px 30px rgba(124,58,237,.4)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 40px rgba(124,58,237,.6)}
+.btn-ghost{background:transparent;border:2px solid var(--muted);color:var(--text)}
+.btn-ghost:hover{border-color:var(--accent);color:#a78bfa}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3rem}
+.card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:2rem;transition:all .4s;position:relative;overflow:hidden}
+.card:hover{border-color:rgba(124,58,237,.3);transform:translateY(-4px)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad);opacity:0;transition:opacity .3s}
+.card:hover::before{opacity:1}
+.icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1rem}
+.steps{display:flex;flex-direction:column;gap:2rem;margin-top:3rem}
+.step{display:flex;gap:1.5rem;align-items:flex-start}
+.step-num{flex-shrink:0;width:48px;height:48px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;color:#fff}
+.step-content h3{margin-bottom:.3rem}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:3rem}
+.price-card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:20px;padding:2.5rem 2rem;text-align:center;transition:all .3s}
+.price-card.featured{border-color:var(--accent);box-shadow:0 0 40px rgba(124,58,237,.15)}
+.price-card:hover{transform:translateY(-4px)}
+.price{font-size:2.5rem;font-weight:900;margin:1rem 0}
+.price span{font-size:1rem;font-weight:400;color:var(--muted)}
+.price-features{text-align:left;margin:1.5rem 0;list-style:none}
+.price-features li{padding:.5rem 0;padding-left:1.5rem;position:relative;color:var(--muted)}
+.price-features li::before{content:'✓';position:absolute;left:0;color:#22c55e;font-weight:700}
+.tag-row{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:2rem}
+.tag{padding:.4rem 1rem;background:rgba(255,255,255,.05);border-radius:8px;font-size:.85rem;color:var(--muted)}
+.cta-section{text-align:center}
+.cta-section .btn{margin:.5rem}
+footer{padding:3rem 2rem;text-align:center;color:var(--muted);font-size:.9rem;border-top:1px solid rgba(255,255,255,.05);position:relative;z-index:1}
+.hero-sub{font-size:1.3rem;color:var(--muted);margin-top:1rem;max-width:600px}
+.hero-btns{margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap}
+@media(max-width:768px){section{padding:3rem 1rem}.grid,.pricing-grid{grid-template-columns:1fr}.hero-btns{flex-direction:column}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<!-- HERO -->
+<section id="hero">
+<div class="container" style="text-align:center">
+<span class="badge">🚀 한국 최초 AI 에이전트 OS</span>
+<h1>대화할수록 <span class="gradient-text">진화하는</span><br>AI 코딩 동반자</h1>
+<p class="hero-sub">코디(Codi)는 처음이든, 고수든 — 당신과 함께 성장합니다.<br>대화하면 학습하고, 해결한 문제를 기억하고, 점점 더 똑똑해집니다.</p>
+<div class="hero-btns" style="justify-content:center">
+<a href="#pricing" class="btn btn-primary">무료로 시작하기</a>
+<a href="#features" class="btn btn-ghost">더 알아보기</a>
+</div>
+<div class="tag-row">
+<span class="tag">OpenRouter</span>
+<span class="tag">OpenAI</span>
+<span class="tag">Anthropic</span>
+<span class="tag">DeepSeek</span>
+<span class="tag">로컬 모델</span>
+<span class="tag">자기 API 키 연결</span>
+</div>
+</div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="fade-in">
+<div class="container">
+<h2>왜 <span class="gradient-text">코디</span>인가</h2>
+<p style="text-align:center;max-width:600px;margin:0 auto">기존 챗봇과 다릅니다. 코디는 대화할수록 학습하고, 당신만의 워크플로우를 기억합니다.</p>
+<div class="grid">
+<div class="card">
+<div class="icon" style="background:rgba(124,58,237,.15)">🧠</div>
+<h3>대화할수록 진화</h3>
+<p>해결한 문제를 스킬로 자동 저장. 같은 질문은 두 번 다시 처음부터 시작하지 않습니다. 대화가 쌓일수록 당신에게 최적화됩니다.</p>
+</div>
+<div class="card">
+<div class="icon" style="background:rgba(59,130,246,.15)">🔑</div>
+<h3>자기 API 키, 자기 모델</h3>
+<p>OpenRouter, OpenAI, Anthropic, DeepSeek, 로컬 모델 — 어떤 LLM이든 당신의 API 키로 연결. 특정 회사에 종속되지 않습니다.</p>
+</div>
+<div class="card">
+<div class="icon" style="background:rgba(34,197,94,.15)">⚡</div>
+<h3>개발자 특화 스킬</h3>
+<p>코드 리뷰, 배포 자동화, 디버깅, TDD, CI/CD — 처음부터 개발자 워크플로우에 최적화. 새 스킬도 쉽게 추가.</p>
+</div>
+<div class="card">
+<div class="icon" style="background:rgba(251,146,60,.15)">🇰🇷</div>
+<h3>완전 한국어</h3>
+<p>시스템 프롬프트, 에러 메시지, 도움말 — 모두 한국어. 한국 개발 환경에 맞춘 에이전트. 영어가 필요하지 않습니다.</p>
+</div>
+<div class="card">
+<div class="icon" style="background:rgba(236,72,153,.15)">💬</div>
+<h3>어디서나 대화</h3>
+<p>터미널, 브라우저, 카카오톡, 텔레그램, 디스코드, 슬랙 — 같은 에이전트가 모든 플랫폼에서 작동. 어디서든 이어서 작업.</p>
+</div>
+<div class="card">
+<div class="icon" style="background:rgba(168,85,247,.15)">🔄</div>
+<h3>자가 학습 시스템</h3>
+<p>복잡한 문제를 해결하면 자동으로 스킬 문서 생성. 다음에 같은 문제를 만나면 즉시 해결. 팀원과 공유도 가능.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="fade-in">
+<div class="container">
+<h2>어떻게 <span class="gradient-text">성장하는가</span></h2>
+<div class="steps">
+<div class="step">
+<div class="step-num">1</div>
+<div class="step-content">
+<h3>대화로 시작</h3>
+<p>"이 코드 리뷰해줘", "배포 자동화 만들어줘", "이 에러 잡아줘" — 자연어로 명령합니다. 코디가 즉시 실행합니다.</p>
+</div>
+</div>
+<div class="step">
+<div class="step-num">2</div>
+<div class="step-content">
+<h3>해결하며 학습</h3>
+<p>문제를 해결하는 과정에서 코디가 패턴을 파악합니다. 어떤 접근법이 효과적이었는지, 어떤 실수를 피했는지 기억합니다.</p>
+</div>
+</div>
+<div class="step">
+<div class="step-num">3</div>
+<div class="step-content">
+<h3>스킬로 축적</h3>
+<p>해결한 문제가 재사용 가능한 스킬로 자동 저장됩니다. 다음에 비슷한 문제를 만나면, 코디가 이미 답을 알고 있습니다.</p>
+</div>
+</div>
+<div class="step">
+<div class="step-num">4</div>
+<div class="step-content">
+<h3>진화</h3>
+<p>대화가 쌓일수록 코디는 당신에게 최적화됩니다. 당신의 코드 스타일, 선호하는 도구, 프로젝트 구조를 학습하고 점점 더 빨라집니다.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="fade-in">
+<div class="container">
+<h2>요금 <span class="gradient-text">안내</span></h2>
+<p style="text-align:center;max-width:500px;margin:0 auto">LLM 사용료는 당신의 API 키로 직접 결제. 코디는 플랫폼 비용만.</p>
+<div class="pricing-grid">
+<div class="price-card">
+<h3>Free</h3>
+<p style="color:var(--muted)">개인 개발자용</p>
+<div class="price">₩0<span>/월</span></div>
+<ul class="price-features">
+<li>기본 에이전트 전체 기능</li>
+<li>일일 대화 제한</li>
+<li>스킬 5개 저장</li>
+<li>터미널 + 1개 메시지 플랫폼</li>
+<li>커뮤니티 지원</li>
+</ul>
+<a href="#" class="btn btn-ghost" style="width:100%;text-align:center;margin-top:1rem">시작하기</a>
+</div>
+<div class="price-card featured">
+<div class="badge" style="margin-bottom:0">인기</div>
+<h3>Pro</h3>
+<p style="color:var(--muted)">활발한 개발자용</p>
+<div class="price">₩29,000<span>/월</span></div>
+<ul class="price-features">
+<li>무제한 대화</li>
+<li>스킬 무제한 저장</li>
+<li>모든 메시지 플랫폼 연동</li>
+<li>브라우저 자동화</li>
+<li>크론잡 자동 스케줄</li>
+<li>우선 이메일 지원</li>
+</ul>
+<a href="#" class="btn btn-primary" style="width:100%;text-align:center;margin-top:1rem">Pro 시작하기</a>
+</div>
+<div class="price-card">
+<h3>Business</h3>
+<p style="color:var(--muted)">팀/스타트업용</p>
+<div class="price">₩99,000<span>/월</span></div>
+<ul class="price-features">
+<li>Pro 전체 기능</li>
+<li>팀 스킬 공유</li>
+<li>서브에이전트 위임</li>
+<li>API 접근</li>
+<li>커스텀 스킬 개발</li>
+<li>전담 지원</li>
+</ul>
+<a href="#" class="btn btn-ghost" style="width:100%;text-align:center;margin-top:1rem">문의하기</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section id="cta" class="fade-in">
+<div class="container cta-section">
+<h2>지금, <span class="gradient-text">진화</span>를 시작하세요</h2>
+<p style="margin:1rem 0 2rem;max-width:500px;margin-left:auto;margin-right:auto">처음 한 번의 대화로 시작됩니다. 코디가 당신과 함께 성장할 준비를 하고 있습니다.</p>
+<a href="#" class="btn btn-primary">무료로 시작하기</a>
+<a href="#" class="btn btn-ghost">문서 보기</a>
+</div>
+</section>
+
+<footer>
+<p>코디(Codi) — 대화하며 성장하는 AI 코딩 동반자</p>
+<p style="margin-top:.5rem">MIT License · Based on Hermes Agent by Nous Research</p>
+</footer>
+
+<script>
+// Star particle background
+const canvas=document.getElementById('stars');
+const ctx=canvas.getContext('2d');
+let stars=[];
+function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
+resize();window.addEventListener('resize',resize);
+function initStars(){stars=[];const count=Math.floor(canvas.width*canvas.height/8000);for(let i=0;i<count;i++){stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1.2,vy:Math.random()*.15+.03,alpha:Math.random()*.5+.2,twinkle:Math.random()*.02})}}
+initStars();
+function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);stars.forEach(s=>{s.y+=s.vy;if(s.y>canvas.height)s.y=0;s.alpha+=Math.sin(Date.now()*s.twinkle)*.002;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(160,140,255,${Math.max(.05,s.alpha)})`;ctx.fill()});requestAnimationFrame(animate)}
+animate();
+
+// Scroll fade-in
+const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+
+// Hero gradient animation on scroll
+const hero=document.getElementById('hero');
+window.addEventListener('scroll',()=>{const scroll=window.scrollY;hero.style.opacity=Math.max(0,1-scroll/600)});
+</script>
+</body>
+</html>
