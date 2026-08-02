@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>퀵스타트 — 코디(Codi)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0f;--card:#13131f;--accent:#7c3aed;--text:#e2e8f0;--muted:#64748b;--code-bg:#1a1a2e}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:2rem}
+.container{max-width:800px;margin:0 auto}
+h1{font-size:2rem;margin-bottom:.5rem}
+h2{font-size:1.4rem;margin:2rem 0 1rem;color:#a78bfa}
+h3{font-size:1.1rem;margin:1.5rem 0 .5rem}
+p{color:var(--muted);margin-bottom:1rem}
+code{font-family:'Noto Sans Mono',monospace;background:var(--code-bg);padding:.15rem .4rem;border-radius:4px;font-size:.9rem;color:#e2e8f0}
+pre{background:var(--code-bg);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:1rem;overflow-x:auto;margin:1rem 0}
+pre code{background:none;padding:0}
+a{color:#a78bfa;text-decoration:none}
+a:hover{text-decoration:underline}
+.step{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:1.5rem;margin:1rem 0}
+.step-num{display:inline-block;width:28px;height:28px;border-radius:50%;background:var(--accent);text-align:center;line-height:28px;font-weight:700;font-size:.9rem;margin-right:.5rem}
+.note{background:rgba(124,58,237,.1);border-left:3px solid var(--accent);padding:1rem;border-radius:0 8px 8px 0;margin:1rem 0}
+.note strong{color:#a78bfa}
+.back{margin-bottom:2rem;display:inline-block}
+</style>
+</head>
+<body>
+<div class="container">
+<a href="index.html" class="back">← 돌아가기</a>
+<h1>🚀 퀵스타트</h1>
+<p>5분 안에 코디를 설치하고 실행합니다.</p>
+
+<div class="step">
+<span class="step-num">1</span><strong>저장소 클론</strong>
+<pre><code>git clone https://github.com/rbcaglobalsg/codi-agent.git
+cd codi-agent</code></pre>
+</div>
+
+<div class="step">
+<span class="step-num">2</span><strong>의존성 설치</strong>
+<pre><code>pip install -e .</code></pre>
+<p>Python 3.11 이상 필요.</p>
+</div>
+
+<div class="step">
+<span class="step-num">3</span><strong>LLM API 키 설정</strong>
+<p>지원 프로바이더 중 하나를 선택해 API 키를 발급받습니다.</p>
+<pre><code># OpenRouter (추천 — 다중 모델)
+export OPENROUTER_API_KEY=sk-or-v1-xxxxx
+
+# OpenAI
+export OPENAI_API_KEY=sk-xxxxx
+
+# Anthropic
+export ANTHROPIC_API_KEY=sk-ant-xxxxx</code></pre>
+<div class="note"><strong>추천:</strong> OpenRouter는 하나의 키로 여러 모델(claude, gpt, deepseek)을 모두 사용할 수 있습니다.</div>
+</div>
+
+<div class="step">
+<span class="step-num">4</span><strong>설정 파일 생성</strong>
+<pre><code># config.yaml 생성
+provider: openrouter
+model: anthropic/claude-sonnet-4
+# 또는: openai/gpt-4o, deepseek/deepseek-chat</code></pre>
+</div>
+
+<div class="step">
+<span class="step-num">5</span><strong>실행</strong>
+<pre><code># 터미널에서
+codi
+
+# 카카오톡/텔레그램 연동 시
+codi gateway start</code></pre>
+<p>첫 대화를 시작하세요: "안녕? 뭐 할 수 있어?"</p>
+</div>
+
+<h2>다음 단계</h2>
+<ul style="color:var(--muted);padding-left:1.5rem">
+<li><a href="skills.html">스킬 만들기</a></li>
+<li><a href="kakao.html">카카오톡 연동</a></li>
+<li><a href="api-keys.html">API 키 가이드</a></li>
+</ul>
+</div>
+</body>
+</html>

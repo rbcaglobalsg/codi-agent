@@ -53,6 +53,11 @@ p{line-height:1.7;color:var(--muted)}
 footer{padding:3rem 2rem;text-align:center;color:var(--muted);font-size:.9rem;border-top:1px solid rgba(255,255,255,.05);position:relative;z-index:1}
 .hero-sub{font-size:1.3rem;color:var(--muted);margin-top:1rem;max-width:600px}
 .hero-btns{margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap}
+.compare-table{width:100%;border-collapse:collapse;margin-top:2rem}
+.compare-table th,.compare-table td{padding:1rem;text-align:left;border-bottom:1px solid rgba(255,255,255,.06)}
+.compare-table th{color:var(--accent);font-weight:600}
+.compare-table td{color:var(--muted)}
+.compare-table tr:hover td{color:var(--text)}
 @media(max-width:768px){section{padding:3rem 1rem}.grid,.pricing-grid{grid-template-columns:1fr}.hero-btns{flex-direction:column}}
 </style>
 </head>
@@ -157,6 +162,28 @@ footer{padding:3rem 2rem;text-align:center;color:var(--muted);font-size:.9rem;bo
 </div>
 </section>
 
+<!-- SELF-HOSTED vs CLOUD -->
+<section id="compare" class="fade-in">
+<div class="container">
+<h2>직접 설치 vs <span class="gradient-text">클라우드</span></h2>
+<p style="text-align:center;max-width:500px;margin:0 auto">기술은 무료로 공개합니다. 편의성을 팝니다.</p>
+<table class="compare-table">
+<tr><th>구분</th><th>직접 설치 (무료)</th><th>클라우드 (유료)</th></tr>
+<tr><td>비용</td><td>무료 (LLM API 비용만)</td><td>월 구독 + LLM 비용</td></tr>
+<tr><td>서버</td><td>자기 서버 필요</td><td>불필요</td></tr>
+<tr><td>설정</td><td>직접</td><td>자동</td></tr>
+<tr><td>카카오톡</td><td>직접 구축</td><td>1클릭 연동</td></tr>
+<tr><td>업데이트</td><td>직접</td><td>자동</td></tr>
+<tr><td>스킬</td><td>직접 관리</td><td>마켓플레이스</td></tr>
+<tr><td>지원</td><td>커뮤니티</td><td>우선 지원</td></tr>
+</table>
+<div style="text-align:center;margin-top:2rem">
+<a href="#" class="btn btn-ghost">직접 설치 가이드</a>
+<a href="#pricing" class="btn btn-primary">클라우드 시작</a>
+</div>
+</div>
+</section>
+
 <!-- PRICING -->
 <section id="pricing" class="fade-in">
 <div class="container">
@@ -225,7 +252,6 @@ footer{padding:3rem 2rem;text-align:center;color:var(--muted);font-size:.9rem;bo
 </footer>
 
 <script>
-// Star particle background
 const canvas=document.getElementById('stars');
 const ctx=canvas.getContext('2d');
 let stars=[];
@@ -235,12 +261,8 @@ function initStars(){stars=[];const count=Math.floor(canvas.width*canvas.height/
 initStars();
 function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);stars.forEach(s=>{s.y+=s.vy;if(s.y>canvas.height)s.y=0;s.alpha+=Math.sin(Date.now()*s.twinkle)*.002;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(160,140,255,${Math.max(.05,s.alpha)})`;ctx.fill()});requestAnimationFrame(animate)}
 animate();
-
-// Scroll fade-in
 const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15});
 document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
-
-// Hero gradient animation on scroll
 const hero=document.getElementById('hero');
 window.addEventListener('scroll',()=>{const scroll=window.scrollY;hero.style.opacity=Math.max(0,1-scroll/600)});
 </script>
